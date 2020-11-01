@@ -8,7 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorTextIcons">#FFFFFFFF</color>
-    <color name="colorPrimaryLight">#1E2746</color>
+    <color name="colorPrimaryLight">#222B4E</color>
+    <color name="colorCardBackground">#313E6E</color>
     <color name="colorTextPrimary">#CBD5ED</color>
     <color name="colorTextSecondary">#4A5B82</color>
     <color name="colorTextOther">#FAD303</color>

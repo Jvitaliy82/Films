@@ -6,27 +6,42 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import ru.jdeveloperapps.filmnews.models.TVShow
+import ru.jdeveloperapps.filmnews.models.all.TVShowResponse
+import ru.jdeveloperapps.filmnews.models.detail.TVDetailResponse
 import ru.jdeveloperapps.filmnews.other.Resourse
 import ru.jdeveloperapps.filmnews.repositories.MostPopularTVShowRepository
 
 class TvShowViewModel @ViewModelInject constructor(val repository: MostPopularTVShowRepository) :
     ViewModel() {
 
-    val mostPopularTVShow: MutableLiveData<Resourse<TVShow>> = MutableLiveData()
-    var mostPopularPage = 1
-    var mostPopularResponse: TVShow? = null
+    val mostPopularTVLiveData: MutableLiveData<Resourse<TVShowResponse>> = MutableLiveData()
+    var currentPage = 1
+    var totalAvailablePages = 1
+    var mostPopularResponse: TVShowResponse? = null
 
-    fun getMostPopularTv() = viewModelScope.launch {
-        mostPopularTVShow.postValue(Resourse.Loading())
-        val response = repository.getMostPopularTvShows(mostPopularPage)
-        mostPopularTVShow.postValue(handleMostPopularTv(response))
+    val showDetailLiveData: MutableLiveData<Resourse<TVDetailResponse>> = MutableLiveData()
+
+    init {
+        getMostPopularTv()
     }
 
-    private fun handleMostPopularTv(response: Response<TVShow>): Resourse<TVShow>? {
+    fun getMostPopularTv() = viewModelScope.launch {
+        mostPopularTVLiveData.postValue(Resourse.Loading())
+        val response = repository.getMostPopularTvShows(currentPage)
+        mostPopularTVLiveData.postValue(handleMostPopularTv(response))
+    }
+
+    fun getDetail(showId: String) = viewModelScope.launch {
+        showDetailLiveData.postValue(Resourse.Loading())
+        val response = repository.getDetail(showId)
+        showDetailLiveData.postValue(handleShowDetail(response))
+    }
+
+    private fun handleMostPopularTv(response: Response<TVShowResponse>): Resourse<TVShowResponse>? {
         if (response.isSuccessful) {
             response.body()?.let {resultResponce ->
-                mostPopularPage++
+                currentPage++
+                totalAvailablePages = resultResponce.total
                 if (mostPopularResponse == null) {
                     mostPopularResponse = resultResponce
                 } else {
@@ -40,5 +55,12 @@ class TvShowViewModel @ViewModelInject constructor(val repository: MostPopularTV
         return Resourse.Error(response.message())
     }
 
-
+    private fun handleShowDetail(response: Response<TVDetailResponse>): Resourse<TVDetailResponse>? {
+        if (response.isSuccessful) {
+            response.body()?.let {resultResponse ->
+                return Resourse.Success(resultResponse)
+            }
+        }
+        return Resourse.Error(response.message())
+    }
 }

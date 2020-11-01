@@ -1,7 +1,7 @@
-package ru.jdeveloperapps.filmnews.models
+package ru.jdeveloperapps.filmnews.models.all
 
 data class TvShowX(
-    val id: Int,
+    val id: String,
     val name: String,
     val start_date: String,
     val country: String,
