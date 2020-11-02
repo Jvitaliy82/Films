@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">FilmNews</string>
+    <string name="read_more">Read More</string>
+    <string name="read_less">Read Less</string>
+    <string name="u2022">•</string>
+    <string name="website">website</string>
+    <string name="episodes">Episodes</string>
 </resources>

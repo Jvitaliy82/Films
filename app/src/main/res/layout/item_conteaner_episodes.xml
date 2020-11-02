@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="episodeTitle"
+            type="String" />
+
+        <variable
+            name="episode"
+            type="ru.jdeveloperapps.filmnews.models.detail.Episode" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_tv_show"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/_8sdp"
+        android:padding="@dimen/_8sdp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@{episodeTitle}"
+            android:textColor="@color/colorTextIcons"
+            android:textSize="@dimen/_13ssp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:includeFontPadding="false"
+            android:text="@{episode.name}"
+            android:textColor="@color/colorTextIcons"
+            android:textSize="@dimen/_12ssp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:includeFontPadding="false"
+            android:text='@{"air date " + episode.air_date}'
+            android:textColor="@color/colorTextIcons"
+            android:textSize="@dimen/_10ssp"/>
+
+    </LinearLayout>
+</layout>
