@@ -1,6 +1,7 @@
 package ru.jdeveloperapps.filmnews.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -12,9 +13,9 @@ import ru.jdeveloperapps.filmnews.models.all.TvShowX
 
 class TvShowAdapter : RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
 
-    private var onItemClickListener: ((String) -> Unit)? = null
+    private var onItemClickListener: ((id: String, imageURL: String, imageView: View) -> Unit)? = null
 
-    fun setOnClickListener(listener: (String) -> Unit) {
+    fun setOnClickListener(listener: (id: String, image: String, imageView: View) -> Unit) {
         onItemClickListener = listener
     }
 
@@ -42,7 +43,7 @@ class TvShowAdapter : RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
         holder.binding.apply {
             root.setOnClickListener {
                 onItemClickListener?.let {
-                    it(currentItem.id)
+                    it(currentItem.id, currentItem.image_thumbnail_path, imageTVShow)
                 }
             }
             tvShow = currentItem

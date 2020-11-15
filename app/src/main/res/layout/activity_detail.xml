@@ -13,6 +13,10 @@
             name="tvShow"
             type="ru.jdeveloperapps.filmnews.models.detail.TvShow" />
 
+        <variable
+            name="imageThumbnail"
+            type="String" />
+
         <import type="android.view.View" />
 
     </data>
@@ -38,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_160sdp"
                     android:orientation="horizontal"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <View
@@ -75,18 +79,17 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:tint="@color/colorTextIcons" />
 
-                <com.makeramen.roundedimageview.RoundedImageView
+                <ImageView
                     android:id="@+id/imageTVShow"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_150sdp"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:imageURL="@{tvShow.image_thumbnail_path}"
+                    android:imageURL="@{imageThumbnail}"
                     android:scaleType="centerCrop"
-                    android:visibility="@{tvShow != null ? View.VISIBLE : View.GONE}"
+                    android:transitionName="imageTN"
                     app:layout_constraintBottom_toBottomOf="@id/sliderViewPager"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/sliderViewPager"
-                    app:riv_corner_radius="@dimen/_6sdp" />
+                    app:layout_constraintTop_toBottomOf="@id/sliderViewPager" />
 
                 <TextView
                     android:id="@+id/textName"

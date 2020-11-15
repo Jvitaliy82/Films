@@ -46,6 +46,10 @@ class DetailActivity : AppCompatActivity() {
     private fun doInitialization() {
         viewModel = ViewModelProvider(this).get(TvShowViewModel::class.java)
         val id = intent.getStringExtra("id")
+        val image_thumbnail = intent.getStringExtra("image_thumbnail")
+
+        activityDetailBinding.imageThumbnail = image_thumbnail
+
         imageBack.setOnClickListener {
             onBackPressed()
         }

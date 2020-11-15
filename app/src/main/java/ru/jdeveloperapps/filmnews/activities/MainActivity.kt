@@ -1,5 +1,6 @@
 package ru.jdeveloperapps.filmnews.activities
 
+import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
 import dagger.hilt.android.AndroidEntryPoint
 import ru.jdeveloperapps.filmnews.R
 import ru.jdeveloperapps.filmnews.adapters.TvShowAdapter
@@ -30,11 +32,16 @@ class MainActivity : AppCompatActivity() {
 
         activityMainBinding.tvShowsRecyclerView.apply {
             setHasFixedSize(true)
-            tvShowAdapter.setOnClickListener {
+            tvShowAdapter.setOnClickListener { id, imageURL, imageView ->
+
+                val optons = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity,
+                imageView, imageView.transitionName)
+
                 val intent = Intent(this@MainActivity, DetailActivity::class.java).apply {
-                    putExtra("id", it)
+                    putExtra("id", id)
+                    putExtra("image_thumbnail", imageURL)
                 }
-                startActivity(intent)
+                startActivity(intent, optons.toBundle())
             }
             adapter = tvShowAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -47,6 +54,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             })
+            postponeEnterTransition()
+            viewTreeObserver.addOnPreDrawListener {
+                startPostponedEnterTransition()
+                true
+            }
         }
 
         viewModel.mostPopularTVLiveData.observe(this, Observer { responce ->
